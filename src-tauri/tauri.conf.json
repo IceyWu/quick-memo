@@ -1,0 +1,88 @@
+{
+  "build": {
+    "beforeDevCommand": "pnpm dev",
+    "beforeBuildCommand": "pnpm build",
+    "devPath": "http://localhost:6130",
+    "distDir": "../dist",
+    "withGlobalTauri": true
+  },
+  "package": {
+    "productName": "IceyWu",
+    "version": "0.0.1"
+  },
+  "tauri": {
+    "updater": {
+      "windows": {
+        "installMode": "basicUi"
+      }
+    },
+    "allowlist": {
+      "all": false,
+      "notification": {
+        "all": true
+      },
+      "os": {
+        "all": true
+      },
+      "process": {
+        "all": true
+      },
+      "shell": {
+        "all": false,
+        "open": true
+      },
+      "http": {
+        "scope": ["http://**", "https://**"]
+      },
+      "fs": {
+        "all": true,
+        "scope": ["*/**"]
+      },
+      "window": {
+        "all": true
+      }
+    },
+    "bundle": {
+      "active": true,
+      "resources": ["tray"],
+      "targets": "all",
+      "identifier": "com.tauri.build",
+      "windows": {
+        "wix": {
+          "language": "zh-CN"
+        }
+      },
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ]
+    },
+    "security": {
+      "csp": null
+    },
+    "macOSPrivateApi": true,
+    "windows": [
+      {
+        "title": "登录",
+        "label": "login",
+        "url": "/login",
+        "fullscreen": false,
+        "resizable": false,
+        "center": true,
+        "width": 320,
+        "height": 448,
+        "skipTaskbar": false,
+        "decorations": false,
+        "transparent": true
+      }
+
+    ],
+    "systemTray": {
+      "iconPath": "icons/icon.ico",
+      "iconAsTemplate": true
+    }
+  }
+}

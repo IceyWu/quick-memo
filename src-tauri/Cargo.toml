@@ -1,0 +1,33 @@
+[package]
+name = "IceyWu"
+version = "0.0.1"
+description = "iceywu"
+authors = ["nongyehong"]
+license = ""
+repository = ""
+edition = "2021"
+
+[profile.release]
+panic = "abort" # 去掉昂贵的恐慌清理逻辑
+codegen-units = 1 # 一个接一个地编译包，这样编译器就可以更好地优化
+lto = true # 启用链接到优化
+opt-level = "s" # 优化二进制文件大小,并且不会太大消耗性能,"z"极致优化大小但是会消耗性能
+strip = true # 删除调试符号
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }
+
+[dependencies]
+tauri = { version = "1.6.1", features = [ "os-all", "process-all", "notification-all", "macos-private-api", "fs-all", "window-all", "system-tray", "shell-open", "icon-png", "icon-ico"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+window-shadows = "0.2.2" # windows 阴影和圆角
+window-vibrancy = "0.4.3" # windows 磨砂背景 tauri-v1.x版本最好使用0.4.3版本
+tokio = { version = "1.36.0", features = ["macros", "windows-sys", "rt-multi-thread", "time"] }
+
+[features]
+# this feature is used for production builds or when `devPath` points to the filesystem
+# DO NOT REMOVE!!
+custom-protocol = ["tauri/custom-protocol"]
