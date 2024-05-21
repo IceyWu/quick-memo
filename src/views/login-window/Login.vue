@@ -4,8 +4,11 @@
   <n-config-provider :theme="lightTheme" data-tauri-drag-region class="login-box size-full rounded-8px select-none">
     <!--顶部操作栏-->
     <ActionBar :max-w="false" :shrink="false" />
-
-    <div class="text-14px cursor-pointer hover:bg-#f3f3f3 hover:rounded-6px p-8px">注册账号</div>
+    <div class="box-border flex flex-col px-2 py-3">
+      <div v-for="(item, index) in dataList" :key="index" class="items-center justify-between p-8px">
+        <CardListItem :info="item" />
+      </div>
+    </div>
   </n-config-provider>
 </template>
 <script setup lang="ts">
@@ -16,6 +19,12 @@ import { setting } from '@/stores/setting.ts'
 import { storeToRefs } from 'pinia'
 import { invoke } from '@tauri-apps/api/tauri'
 import { useLogin } from '@/hooks/useLogin.ts'
+import CardListItem from '@/components/Card/ListItem.vue'
+
+const dataList = ref([
+  { content: '我是片段', title: '我是标题' },
+  { content: '我是片段', title: '我是标题' }
+])
 
 const settingStore = setting()
 const { login } = storeToRefs(settingStore)
