@@ -37,6 +37,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@iceywu/utils": "^0.0.40",
     "@tauri-apps/api": "^1.5.3",
     "axios": "^1.6.8",
     "colorthief": "^2.4.0",

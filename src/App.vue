@@ -9,6 +9,11 @@
 import { setting } from '@/stores/setting.ts'
 import { storeToRefs } from 'pinia'
 import { StoresEnum, ThemeEnum } from '@/enums'
+import { registerAll } from '@tauri-apps/api/globalShortcut'
+registerAll(['CommandOrControl+Shift+C', 'Ctrl+Alt+F12'], (shortcut) => {
+  console.log(`Shortcut ${shortcut} triggered`)
+  // 在光标后面插入 111
+})
 
 const settingStore = setting()
 const { themes } = storeToRefs(settingStore)

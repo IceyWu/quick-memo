@@ -45,6 +45,9 @@
         "all": true,
         "writeText": true,
         "readText": true
+      },
+      "globalShortcut": {
+        "all": true
       }
     },
     "bundle": {

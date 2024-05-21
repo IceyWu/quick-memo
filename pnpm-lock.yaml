@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@iceywu/utils':
+    specifier: ^0.0.40
+    version: 0.0.40
   '@tauri-apps/api':
     specifier: ^1.5.3
     version: 1.5.6
@@ -942,6 +945,12 @@ packages:
     resolution: {integrity: sha512-e5+YUKENATs1JgYHMzTr2MW/NDcXGfYFAuOQU8gJgF/kEh4EqKgfGrfLI67bMD4tbhZVlkigz/9YYwWcbOFthg==}
     engines: {node: '>=10.13.0'}
     dev: true
+
+  /@iceywu/utils@0.0.40:
+    resolution: {integrity: sha512-KdZag3tyi5eNvGK6pjU44Ae6UtTnj8vEVH4SXuxwO4ERlMEpU68Te450o6gnnogo6B2s7938SOmDdNtG0jaMQQ==}
+    dependencies:
+      lodash: 4.17.21
+    dev: false
 
   /@jridgewell/gen-mapping@0.3.5:
     resolution: {integrity: sha512-IzL8ZoEDIBRWEzlCcRhOaCupYyN5gdIK+Q6fbFdPDg6HqX6jpkItn7DFIpW9LQzXG6Df9sA7+OKnq0qlz/GaQg==}

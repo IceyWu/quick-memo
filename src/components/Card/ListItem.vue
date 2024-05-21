@@ -8,7 +8,8 @@
 </template>
 
 <script setup lang="ts">
-import { writeText, readText } from '@tauri-apps/api/clipboard'
+// import { writeText, readText } from '@tauri-apps/api/clipboard'
+import { sendNotice } from '@/services/msg'
 
 interface IListItem {
   content: string
@@ -19,8 +20,13 @@ const props = defineProps<{
   info: IListItem
 }>()
 const writeTextFunc = async () => {
-  await writeText('Tauri is awesome!')
-  assert(await readText(), 'Tauri is awesome!')
+  // await writeText('Tauri is awesome!')
+
+  // assert(await readText(), 'Tauri is awesome!')
+  const { content } = props.info as IListItem
+  console.log('🌵-----content-----', content)
+  sendNotice('', 'Copy!')
+  // assert(content, 'Tauri is awesome!')
 }
 </script>
 
