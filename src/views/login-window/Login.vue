@@ -5,6 +5,7 @@
     <!--顶部操作栏-->
     <ActionBar :max-w="false" :shrink="false" />
     <div class="box-border flex flex-col px-2 py-3">
+      <SearchInput @search="handelSearch" />
       <div v-for="(item, index) in dataList" :key="index" class="items-center justify-between p-8px">
         <CardListItem :info="item" />
       </div>
@@ -20,6 +21,7 @@ import { storeToRefs } from 'pinia'
 import { invoke } from '@tauri-apps/api/tauri'
 import { useLogin } from '@/hooks/useLogin.ts'
 import CardListItem from '@/components/Card/ListItem.vue'
+import SearchInput from '@/components/Base/SearchInput.vue'
 
 const dataList = ref([
   { content: '我是片段', title: '我是标题' },
@@ -97,6 +99,10 @@ onMounted(async () => {
 onUnmounted(() => {
   window.removeEventListener('click', handleClickOutside, true)
 })
+
+const handelSearch = (val: string) => {
+  console.log('💗handelSearch---------->', val)
+}
 </script>
 
 <style scoped lang="scss">
