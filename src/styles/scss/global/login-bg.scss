@@ -1,12 +1,13 @@
 /**! 可以根据自己的喜好搭配渐变，网址：https://webgradients.com/ */
+// ["#D4B3F0","#EFC3D7","#F0E0BA","#8ffff8"]
 .login-box {
-  background-color: #d8eee2;
+  background-color: #fed6e3;
   background-image:
-          radial-gradient(closest-side, #30cfd0, rgba(235, 105, 78, 0)),
-          radial-gradient(closest-side, #52aea3, rgba(243, 11, 164, 0)),
-          radial-gradient(closest-side, #fff1eb, rgba(254, 234, 131, 0)),
+          radial-gradient(closest-side, #D4B3F0, rgba(235, 105, 78, 0)),
+          radial-gradient(closest-side, #EFC3D7, rgba(243, 11, 164, 0)),
+          radial-gradient(closest-side, #F0E0BA, rgba(254, 234, 131, 0)),
           radial-gradient(closest-side, #fed6e3, rgba(170, 142, 245, 0)),
-          radial-gradient(closest-side, #a8edea, rgba(248, 192, 147, 0));
+          radial-gradient(closest-side, #8ffff8, rgba(248, 192, 147, 0));
   background-size:
           130vmax 130vmax,
           80vmax 80vmax,
@@ -20,7 +21,7 @@
           -30vmax -10vmax,
           50vmax 50vmax;
   background-repeat: no-repeat;
-  animation: 8s movement linear infinite;
+  animation: 4s movement linear infinite;
 }
 
 @keyframes movement {

@@ -3,11 +3,18 @@
   <!-- 单独使用n-config-provider来包裹不需要主题切换的界面 -->
   <n-config-provider :theme="lightTheme" data-tauri-drag-region class="login-box size-full rounded-8px select-none">
     <!--顶部操作栏-->
-    <ActionBar :max-w="false" :shrink="false" />
+    <ActionBar data-tauri-drag-region :max-w="false" :shrink="false" />
     <div class="box-border flex flex-col px-2 py-3">
-      <SearchInput @search="handelSearch" />
-      <div v-for="(item, index) in dataList" :key="index" class="items-center justify-between p-8px">
-        <CardListItem :info="item" />
+      <SearchInput @search="handelSearch" v-model="searchVal" />
+      <div class="box-border flex flex-col overflow-auto h-90 list-box">
+        <div v-for="(item, index) in dataList" :key="index" class="items-center justify-between p-8px">
+          <CardListItem
+            ref="cardListItemRef"
+            @handleClick="handleClick(item, index)"
+            :chooseIndex
+            :index
+            :info="item" />
+        </div>
       </div>
     </div>
   </n-config-provider>
@@ -22,11 +29,38 @@ import { invoke } from '@tauri-apps/api/tauri'
 import { useLogin } from '@/hooks/useLogin.ts'
 import CardListItem from '@/components/Card/ListItem.vue'
 import SearchInput from '@/components/Base/SearchInput.vue'
+import { list } from '@iceywu/utils'
+import { onKeyStroke } from '@vueuse/core'
+onKeyStroke(['w', 'W', 'ArrowUp'], () => {
+  if (chooseIndex.value > 0) {
+    chooseIndex.value--
+  }
+})
+onKeyStroke(['s', 'S', 'ArrowDown'], () => {
+  if (chooseIndex.value < dataList.value.length - 1) {
+    chooseIndex.value++
+  }
+})
+// enter
+onKeyStroke('Enter', () => {
+  if (chooseIndex.value < dataList.value.length - 1 && chooseIndex.value >= 0) {
+    if (cardListItemRef.value) {
+      cardListItemRef.value[chooseIndex.value]?.writeTextFunc()
+    }
+  }
+})
 
-const dataList = ref([
-  { content: '我是片段', title: '我是标题' },
-  { content: '我是片段', title: '我是标题' }
-])
+const cardListItemRef = ref()
+
+const dataList = ref(
+  list(0, 10, (index: number) => {
+    return {
+      // id: index,
+      title: `我是标题${index}`,
+      content: '我是片段' + index
+    }
+  })
+)
 
 const settingStore = setting()
 const { login } = storeToRefs(settingStore)
@@ -81,7 +115,7 @@ const handleClickOutside = (event: MouseEvent) => {
 
 onMounted(async () => {
   await invoke('set_stateless_icon').catch((error) => {
-    console.error('设置无状态图标失败:', error)
+    console.log('🍭-----error-----', error)
   })
   if (login.value.autoLogin && login.value.accountInfo.password !== '') {
     isAutoLogin.value = true
@@ -99,13 +133,23 @@ onMounted(async () => {
 onUnmounted(() => {
   window.removeEventListener('click', handleClickOutside, true)
 })
-
+const searchVal = ref<any>('')
 const handelSearch = (val: string) => {
-  console.log('💗handelSearch---------->', val)
+  console.log('🐳-----val-----', val)
+}
+const chooseIndex = ref(-1)
+const handleClick = (date: any, index: any) => {
+  console.log('🌵-----date-----', date)
+
+  chooseIndex.value = index
 }
 </script>
 
 <style scoped lang="scss">
 @import '@/styles/scss/global/login-bg';
 @import '@/styles/scss/login';
+
+.list-box::-webkit-scrollbar {
+  display: none;
+}
 </style>

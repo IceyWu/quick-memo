@@ -1,15 +1,18 @@
 <template>
   <div
     @click="writeTextFunc"
-    class="list-item-card cursor-pointer p-4 text-white shadow-lg bg-clip-border rounded-xl bg-blue-gray-500 shadow-blue-gray-500/40">
+    :class="chooseIndex === index ? 'list-item-card-selected' : ''"
+    class="list-item-card cursor-pointer p-4 rounded-xl">
     <h3>{{ props.info.title }}</h3>
     <p>{{ props.info.content }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
-// import { writeText, readText } from '@tauri-apps/api/clipboard'
+import { writeText } from '@tauri-apps/api/clipboard'
 import { sendNotice } from '@/services/msg'
+import assert from 'node:assert'
+import { to } from '@iceywu/utils'
 
 interface IListItem {
   content: string
@@ -18,16 +21,36 @@ interface IListItem {
 }
 const props = defineProps<{
   info: IListItem
+  chooseIndex: number
+  index: number
 }>()
+const emit = defineEmits(['handleClick'])
 const writeTextFunc = async () => {
-  // await writeText('Tauri is awesome!')
-
   // assert(await readText(), 'Tauri is awesome!')
   const { content } = props.info as IListItem
   console.log('🌵-----content-----', content)
-  sendNotice('', 'Copy!')
-  // assert(content, 'Tauri is awesome!')
+  console.log('🦄-----assert-----', assert)
+  emit('handleClick', props.info, props.index)
+  const [err, _] = await to(writeText(content))
+  if (err) {
+    sendNotice('error', 'Copy failed!')
+  } else {
+    sendNotice('', 'Copy!')
+  }
 }
+defineExpose({
+  writeTextFunc
+})
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.list-item-card {
+  background-image: linear-gradient(to left, #a8edea 0%, #fed6e3 100%);
+  box-sizing: border-box;
+
+  &-selected {
+    // background-image: linear-gradient(to left, #a8edea 0%, #fed6e3 100%);
+    border: 2px solid #a8edea;
+  }
+}
+</style>

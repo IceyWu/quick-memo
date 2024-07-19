@@ -34,7 +34,8 @@
     "commit": "git add . && git-cz",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "lint:staged": "lint-staged",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@iceywu/utils": "^0.0.40",
