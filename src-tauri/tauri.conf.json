@@ -80,8 +80,8 @@
         "fullscreen": false,
         "resizable": false,
         "center": true,
-        "width": 320,
-        "height": 448,
+        "width": 360,
+        "height": 390,
         "skipTaskbar": false,
         "decorations": false,
         "transparent": true

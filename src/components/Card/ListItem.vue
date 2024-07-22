@@ -3,8 +3,8 @@
     @click="writeTextFunc"
     :class="chooseIndex === index ? 'list-item-card-selected' : ''"
     class="list-item-card cursor-pointer p-4 rounded-xl">
-    <h3>{{ props.info.title }}</h3>
-    <p>{{ props.info.content }}</p>
+    <p class="title">{{ props.info.title }}</p>
+    <p class="content">{{ props.info.content }}</p>
   </div>
 </template>
 
@@ -51,6 +51,15 @@ defineExpose({
   &-selected {
     // background-image: linear-gradient(to left, #a8edea 0%, #fed6e3 100%);
     border: 2px solid #a8edea;
+  }
+  .content {
+    line-height: 23px;
+    font-size: 14px;
+  }
+  .title {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 26px;
   }
 }
 </style>

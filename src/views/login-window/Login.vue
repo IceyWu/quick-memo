@@ -5,7 +5,8 @@
     <!--顶部操作栏-->
     <ActionBar data-tauri-drag-region :max-w="false" :shrink="false" />
     <div class="box-border flex flex-col px-2 py-3">
-      <SearchInput @search="handelSearch" v-model="searchVal" />
+      <TagLsit />
+      <!-- <SearchInput @search="handelSearch" v-model="searchVal" /> -->
       <div class="box-border flex flex-col overflow-auto h-90 list-box">
         <div v-for="(item, index) in dataList" :key="index" class="items-center justify-between p-8px">
           <CardListItem
@@ -29,8 +30,10 @@ import { invoke } from '@tauri-apps/api/tauri'
 import { useLogin } from '@/hooks/useLogin.ts'
 import CardListItem from '@/components/Card/ListItem.vue'
 import SearchInput from '@/components/Base/SearchInput.vue'
+import TagLsit from '@/components/Base/TagLsit.vue'
 import { list } from '@iceywu/utils'
 import { onKeyStroke } from '@vueuse/core'
+import { words, getWordsByTag } from '@/enums/data'
 onKeyStroke(['w', 'W', 'ArrowUp'], () => {
   if (chooseIndex.value > 0) {
     chooseIndex.value--
@@ -52,15 +55,9 @@ onKeyStroke('Enter', () => {
 
 const cardListItemRef = ref()
 
-const dataList = ref(
-  list(0, 10, (index: number) => {
-    return {
-      // id: index,
-      title: `我是标题${index}`,
-      content: '我是片段' + index
-    }
-  })
-)
+const dataList = computed(() => {
+  return getWordsByTag('all')
+})
 
 const settingStore = setting()
 const { login } = storeToRefs(settingStore)
@@ -137,7 +134,7 @@ const searchVal = ref<any>('')
 const handelSearch = (val: string) => {
   console.log('🐳-----val-----', val)
 }
-const chooseIndex = ref(-1)
+const chooseIndex = ref(0)
 const handleClick = (date: any, index: any) => {
   console.log('🌵-----date-----', date)
 
