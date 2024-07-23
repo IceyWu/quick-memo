@@ -5,9 +5,9 @@
     <!--顶部操作栏-->
     <ActionBar data-tauri-drag-region :max-w="false" :shrink="false" />
     <div class="box-border flex flex-col px-2 py-3">
-      <TagLsit />
+      <TagLsit @handleChange="handleTagChange" />
       <!-- <SearchInput @search="handelSearch" v-model="searchVal" /> -->
-      <div class="box-border flex flex-col overflow-auto h-90 list-box">
+      <div class="box-border flex flex-col overflow-auto h-73 list-box">
         <div v-for="(item, index) in dataList" :key="index" class="items-center justify-between p-8px">
           <CardListItem
             ref="cardListItemRef"
@@ -29,11 +29,13 @@ import { storeToRefs } from 'pinia'
 import { invoke } from '@tauri-apps/api/tauri'
 import { useLogin } from '@/hooks/useLogin.ts'
 import CardListItem from '@/components/Card/ListItem.vue'
-import SearchInput from '@/components/Base/SearchInput.vue'
+// import SearchInput from '@/components/Base/SearchInput.vue'
 import TagLsit from '@/components/Base/TagLsit.vue'
-import { list } from '@iceywu/utils'
+// import { list } from '@iceywu/utils'
 import { onKeyStroke } from '@vueuse/core'
-import { words, getWordsByTag } from '@/enums/data'
+import { baseWords } from '@/stores/baseWords'
+const baseWordsStore = baseWords()
+// const { baseWordsVal } = storeToRefs(baseWordsStore)
 onKeyStroke(['w', 'W', 'ArrowUp'], () => {
   if (chooseIndex.value > 0) {
     chooseIndex.value--
@@ -54,10 +56,13 @@ onKeyStroke('Enter', () => {
 })
 
 const cardListItemRef = ref()
-
+const chooseTag = ref('all')
 const dataList = computed(() => {
-  return getWordsByTag('all')
+  return baseWordsStore.getWordsByTag(chooseTag.value)
 })
+const handleTagChange = (val: string) => {
+  chooseTag.value = val
+}
 
 const settingStore = setting()
 const { login } = storeToRefs(settingStore)

@@ -46,4 +46,8 @@ declare namespace STO {
   type History = {
     emoji: string[]
   }
+  /** 历史内容 */
+  type BaseWords = {
+    baseWordsVal: any[]
+  }
 }
