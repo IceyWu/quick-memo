@@ -135,10 +135,8 @@ onMounted(async () => {
 onUnmounted(() => {
   window.removeEventListener('click', handleClickOutside, true)
 })
-const searchVal = ref<any>('')
-const handelSearch = (val: string) => {
-  console.log('🐳-----val-----', val)
-}
+//
+
 const chooseIndex = ref(0)
 const handleClick = (date: any, index: any) => {
   console.log('🌵-----date-----', date)
