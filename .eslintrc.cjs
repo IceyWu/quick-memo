@@ -43,7 +43,6 @@ module.exports = {
 		 * 需要改成vue/no-setup-props-reactivity-loss规则
 		 * */
 		'vue/no-setup-props-destructure': 'off',
-		'@typescript-eslint/no-unused-vars': 'off',
 		'no-undef': 'off',
 		'no-var': 'error', // 不能使用var
 		'no-multiple-empty-lines': ['warn', { max: 2 }], // 不允许多个空行

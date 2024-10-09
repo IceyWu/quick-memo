@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { StoresEnum } from '@/enums'
 
 export const baseWords = defineStore(StoresEnum.HISTORY, {
-  state: (): STO.BaseWords => ({
+  state: (): any => ({
     baseWordsVal: []
   }),
   actions: {
@@ -10,7 +10,7 @@ export const baseWords = defineStore(StoresEnum.HISTORY, {
       this.baseWordsVal = list
     },
     getWordsByTag(tag: string) {
-      return tag === 'all' ? this.baseWordsVal : this.baseWordsVal.filter((item) => item.tags.includes(tag))
+      return tag === 'all' ? this.baseWordsVal : this.baseWordsVal.filter((item: any) => item.tags.includes(tag))
     }
   },
   share: {

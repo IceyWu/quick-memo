@@ -1,96 +1,28 @@
 {
+  "productName": "HuLa",
+  "version": "2.1.0",
+  "identifier": "com.tauri.build",
   "build": {
     "beforeDevCommand": "pnpm dev",
     "beforeBuildCommand": "pnpm build",
-    "devPath": "http://localhost:6130",
-    "distDir": "../dist",
-    "withGlobalTauri": true
+    "frontendDist": "../dist",
+    "devUrl": "http://127.0.0.1:6130"
   },
-  "package": {
-    "productName": "IceyWu",
-    "version": "0.0.1"
+  "bundle": {
+    "resources": [
+      "tray"
+    ],
+    "active": true,
+    "icon": [],
+    "windows": {},
+    "macOS": {}
   },
-  "tauri": {
-    "updater": {
-      "windows": {
-        "installMode": "basicUi"
-      }
-    },
-    "allowlist": {
-      "all": false,
-      "notification": {
-        "all": true
-      },
-      "os": {
-        "all": true
-      },
-      "process": {
-        "all": true
-      },
-      "shell": {
-        "all": false,
-        "open": true
-      },
-      "http": {
-        "scope": ["http://**", "https://**"]
-      },
-      "fs": {
-        "all": true,
-        "scope": ["*/**"]
-      },
-      "window": {
-        "all": true
-      },
-      "clipboard": {
-        "all": true,
-        "writeText": true,
-        "readText": true
-      },
-      "globalShortcut": {
-        "all": true
-      }
-    },
-    "bundle": {
-      "active": true,
-      "resources": ["tray"],
-      "targets": "all",
-      "identifier": "com.tauri.build",
-      "windows": {
-        "wix": {
-          "language": "zh-CN"
-        }
-      },
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ]
-    },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [],
     "security": {
       "csp": null
     },
-    "macOSPrivateApi": true,
-    "windows": [
-      {
-        "title": "登录",
-        "label": "login",
-        "url": "/login",
-        "fullscreen": false,
-        "resizable": false,
-        "center": true,
-        "width": 360,
-        "height": 390,
-        "skipTaskbar": false,
-        "decorations": false,
-        "transparent": true
-      }
-
-    ],
-    "systemTray": {
-      "iconPath": "icons/icon.ico",
-      "iconAsTemplate": true
-    }
+    "macOSPrivateApi": true
   }
 }

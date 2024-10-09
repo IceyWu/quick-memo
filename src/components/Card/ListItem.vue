@@ -9,8 +9,9 @@
 </template>
 
 <script setup lang="ts">
-import { writeText } from '@tauri-apps/api/clipboard'
-import { sendNotice } from '@/services/msg'
+import { writeText } from '@tauri-apps/plugin-clipboard-manager'
+// import { writeText } from '@tauri-apps/api/clipboard'
+// import { sendNotice } from '@/services/msg'
 import assert from 'node:assert'
 import { to } from '@iceywu/utils'
 
@@ -32,11 +33,12 @@ const writeTextFunc = async () => {
   console.log('🦄-----assert-----', assert)
   emit('handleClick', props.info, props.index)
   const [err, _] = await to(writeText(content))
-  if (err) {
-    sendNotice('error', 'Copy failed!')
-  } else {
-    sendNotice('', 'Copy!')
-  }
+  console.log('🐳-----err, _-----', err, _)
+  // if (err) {
+  //   sendNotice('error', 'Copy failed!')
+  // } else {
+  //   sendNotice('', 'Copy!')
+  // }
 }
 defineExpose({
   writeTextFunc

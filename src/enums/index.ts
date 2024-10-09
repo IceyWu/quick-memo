@@ -21,9 +21,13 @@ export enum RCodeEnum {
 /**URL*/
 export enum URLEnum {
   /**用户*/
-  USER = '/user',
-  /**文章*/
-  ARTICLE = '/article'
+  USER = '/api/user',
+  /**聊天*/
+  CHAT = '/api/chat',
+  /**房间*/
+  ROOM = '/api/room',
+  /**oss*/
+  OSS = '/api/oss'
 }
 
 /** tauri原生跨窗口通信时传输的类型 */
@@ -39,29 +43,37 @@ export enum EventEnum {
   /** 独立窗口 */
   ALONE = 'alone',
   /** 共享屏幕 */
-  SHARE_SCREEN = 'shareScreen'
+  SHARE_SCREEN = 'shareScreen',
+  /** 锁屏 */
+  LOCK_SCREEN = 'lockScreen'
 }
 
 /** Mitt兄弟组件通信 */
 export enum MittEnum {
   /** 更新消息数量 */
-  UPDATE_MSG_TOTAL = 'updateMsgTotal',
+  UPDATE_MSG_TOTAL,
   /** 显示消息框 */
-  MSG_BOX_SHOW = 'msgBoxShow',
+  MSG_BOX_SHOW,
   /** 发送消息 */
-  SEND_MESSAGE = 'sendMessage',
+  SEND_MESSAGE,
   /** 跳到发送信息 */
-  TO_SEND_MSG = 'toSendMsg',
+  TO_SEND_MSG,
   /** 缩小窗口 */
-  SHRINK_WINDOW = 'shrinkWindow',
+  SHRINK_WINDOW,
   /** 详情页面显示 */
-  DETAILS_SHOW = 'detailsShow',
+  DETAILS_SHOW,
   /** 消息列表被清空或者暂无消息 */
-  NOT_MSG = 'notMsg',
+  NOT_MSG,
   /** 回复消息 */
-  REPLY_MEG = 'replyMeg',
+  REPLY_MEG,
   /** 手动触发InfoPopover */
-  INFO_POPOVER = 'infoPopover'
+  INFO_POPOVER,
+  /** 打开个人信息编辑窗口 */
+  OPEN_EDIT_INFO,
+  /** 关闭个人信息浮窗 */
+  CLOSE_INFO_SHOW,
+  /** 左边菜单弹窗 */
+  LEFT_MODAL_SHOW
 }
 
 /** 主题类型 */
@@ -83,31 +95,96 @@ export enum StoresEnum {
   /** 在线状态 */
   ONLINE_STATUS = 'onlineStatus',
   /** 历史内容 */
-  HISTORY = 'history'
+  HISTORY = 'history',
+  /** 聊天列表 */
+  CHAT_LIST = 'chatList',
+  /** 插件列表 */
+  PLUGINS = 'plugins',
+  /** 侧边栏头部菜单栏 */
+  MENUTOP = 'menuTop'
 }
 
 /**
  * 消息类型
+ * todo: 后续需要补充
  */
 export enum MsgEnum {
+  /** 未知 */
+  UNKNOWN,
   /** 文本 */
   TEXT,
+  /** 撤回 */
+  RECALL,
   /** 图片 */
   IMAGE,
-  /** 混合 */
-  MIXED,
+  /** 文件 */
+  FILE,
   /** 语音 */
   VOICE,
   /** 视频 */
   VIDEO,
-  /** 文件 */
-  FILE,
-  /** 表情 */
-  EMOTICON,
+  /** 表情包 */
+  EMOJI,
+  /** 系统消息 */
+  SYSTEM,
+  /** 混合 */
+  MIXED,
   /** 艾特 */
   AIT,
   /** 回复 */
   REPLY
+}
+
+/**
+ * 在线状态
+ */
+export enum OnlineEnum {
+  /** 在线 */
+  ONLINE = 1,
+  /** 离线 */
+  OFFLINE
+}
+
+/**
+ * 操作类型
+ */
+export enum ActEnum {
+  /** 确认 */
+  Confirm = 1,
+  /** 取消 */
+  Cancel
+}
+
+export enum SexEnum {
+  MAN = 1,
+  REMALE
+}
+
+export enum PowerEnum {
+  USER,
+  ADMIN
+}
+
+export enum IsYetEnum {
+  NO,
+  YES
+}
+
+export enum MarkEnum {
+  LIKE = 1,
+  DISLIKE
+}
+
+// 成员角色 1群主 2管理员 3普通成员 4踢出群聊
+export enum RoleEnum {
+  /** 1群主 */
+  LORD = 1,
+  /** 2管理员 */
+  ADMIN,
+  /** 3普通成员 */
+  NORMAL,
+  /** 4踢出群聊 */
+  REMOVED
 }
 
 /** 房间类型 1群聊 2单聊 */
@@ -116,6 +193,14 @@ export enum RoomTypeEnum {
   GROUP = 1,
   /** 2单聊 */
   SINGLE = 2
+}
+
+/** 变更类型 1 加入群组，2： 移除群组 */
+export enum ChangeTypeEnum {
+  /** 1 加入群组 */
+  JOIN = 1,
+  /** 2 移除群组 */
+  REMOVE
 }
 
 /** 关闭窗口的行为 */
@@ -147,5 +232,46 @@ export enum WsResEnum {
   /** 二维码登录 */
   QRCODE_LOGIN = 'qrcodeLogin',
   /** 登录成功 */
-  LOGIN_SUCCESS = 'loginSuccess'
+  LOGIN_SUCCESS = 'loginSuccess',
+  /** ws连接错误 */
+  WS_ERROR = 'wsError'
+}
+
+/** 左边菜单弹出框类型 */
+export enum ModalEnum {
+  /** 锁屏弹窗 */
+  LOCK_SCREEN,
+  /** 检查更新弹窗 */
+  CHECK_UPDATE
+}
+
+/** MacOS键盘映射 */
+export enum MacOsKeyEnum {
+  '⌘' = '⌘',
+  '⌥' = '⌥',
+  '⇧' = '⇧'
+}
+
+/** Windows键盘映射 */
+export enum WinKeyEnum {
+  CTRL = 'Ctrl',
+  WIN = 'Win',
+  ALT = 'Alt',
+  SHIFT = 'Shift'
+}
+
+/** 插件状态 */
+export enum PluginEnum {
+  /** 已内置 */
+  BUILTIN,
+  /** 已安装 */
+  INSTALLED,
+  /** 下载中 */
+  DOWNLOADING,
+  /** 未安装 */
+  NOT_INSTALLED,
+  /** 卸载中 */
+  UNINSTALLING,
+  /** 可更新 */
+  CAN_UPDATE
 }

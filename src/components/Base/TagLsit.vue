@@ -1,7 +1,7 @@
 <template>
   <div class="w-full box-border px-2">
     <n-tabs v-model:value="value" type="line" @update:value="handleClick">
-      <n-tab v-for="panel in panelsList" :key="panel" :name="panel">
+      <n-tab v-for="(panel, index) in panelsList" :key="index" :name="panel">
         {{ panel }}
       </n-tab>
       <!-- <template #prefix> Prefix </template> -->
@@ -19,14 +19,14 @@ import { baseWords } from '@/stores/baseWords'
 import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 const baseWordsStore = baseWords()
-const { baseWordsVal } = storeToRefs(baseWordsStore)
+const { baseWordsVal } = storeToRefs(baseWordsStore) as any
 
-const panelsList = computed(() => {
-  const tags = baseWordsVal.value?.map((item) => item.tags).flat()
+const panelsList = computed<any>(() => {
+  const tags = baseWordsVal.value?.map((item: any) => item.tags).flat()
   const uniqueTags = Array.from(new Set(tags))
   return ['all', ...uniqueTags]
 })
-const value = ref(panelsList.value[0])
+const value = ref<any>(panelsList.value[0])
 const emit = defineEmits(['handleChange'])
 const handleClick = (data: any) => {
   emit('handleChange', data)

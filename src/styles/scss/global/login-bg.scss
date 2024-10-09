@@ -1,5 +1,4 @@
 /**! 可以根据自己的喜好搭配渐变，网址：https://webgradients.com/ */
-// ["#D4B3F0","#EFC3D7","#F0E0BA","#8ffff8"]
 .login-box {
   background-color: #fed6e3;
   background-image:
@@ -21,7 +20,7 @@
           -30vmax -10vmax,
           50vmax 50vmax;
   background-repeat: no-repeat;
-  animation: 4s movement linear infinite;
+  animation: 8s movement linear infinite;
 }
 
 @keyframes movement {

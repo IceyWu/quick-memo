@@ -1,40 +1,47 @@
 import { defineStore } from 'pinia'
 import { CloseBxEnum, StoresEnum, ThemeEnum } from '@/enums'
+import apis from '@/services/apis.ts'
+import { isDiffNow10Min } from '@/utils/ComputedTime.ts'
+import type { CacheBadgeItem } from '@/services/types.ts'
 
+const badgeCachedList = reactive<Record<number, Partial<CacheBadgeItem>>>({})
 // TODO 使用indexDB或者把配置写出到文件中，还需要根据每个账号来进行配置 (nyh -> 2024-03-26 01:22:12)
 export const setting = defineStore(StoresEnum.SETTING, {
   state: (): STO.Setting => ({
-    /** 主题设置 */
     themes: {
       content: '',
-      pattern: ''
+      pattern: '',
+      versatile: 'default'
     },
-    /** 是否启用ESC关闭窗口 */
     escClose: true,
-    /** 系统托盘 */
+    lockScreen: {
+      enable: false,
+      password: ''
+    },
     tips: {
       type: CloseBxEnum.HIDE,
       notTips: false
     },
-    /** 登录设置 */
     login: {
       autoLogin: false,
       autoStartup: false,
-      /** 用户保存的登录信息 */
       accountInfo: {
         account: '',
         password: '',
         name: '',
         avatar: '',
-        uid: ''
-      }
+        uid: 0,
+        token: ''
+      },
+      badgeList: []
     },
-    /** 聊天设置 */
     chat: {
-      /** 发送快捷键 */
       sendKey: 'Enter',
-      /** 是否双击打开独立会话窗口 */
       isDouble: true
+    },
+    page: {
+      shadow: true,
+      fonts: 'PingFang'
     }
   }),
   actions: {
@@ -66,9 +73,30 @@ export const setting = defineStore(StoresEnum.SETTING, {
     setAccountInfo(accountInfo: STO.Setting['login']['accountInfo']) {
       this.login.accountInfo = accountInfo
     },
+    /** 批量获取用户徽章详细信息 */
+    async getBatchBadgeInfo(itemIds: number[]) {
+      // 没有 lastModifyTime 的要更新，lastModifyTime 距离现在 10 分钟已上的也要更新
+      const result = itemIds
+        .map((itemId) => {
+          const cacheBadge = badgeCachedList[itemId]
+          return { itemId, lastModifyTime: cacheBadge?.lastModifyTime }
+        })
+        .filter((item) => !item.lastModifyTime || isDiffNow10Min(item.lastModifyTime))
+      if (!result.length) return
+      const { data } = await apis.getBadgesBatch(result)
+      data?.forEach(
+        (item: CacheBadgeItem) =>
+          // 更新最后更新时间。
+          (badgeCachedList[item.itemId] = {
+            ...(item?.needRefresh ? item : badgeCachedList[item.itemId]),
+            needRefresh: void 0,
+            lastModifyTime: Date.now()
+          })
+      )
+    },
     /** 清空账号信息 */
     clearAccount() {
-      this.login.accountInfo = { account: '', avatar: '', name: '', password: '', uid: '' }
+      this.login.accountInfo.password = ''
     }
   },
   share: {

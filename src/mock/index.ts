@@ -1,3 +1,5 @@
+import { MockItem } from '@/services/types.ts'
+
 const avatars = 'https://picsum.photos/140'
 
 // TODO 生成随机英文字符串的函数（只用于测试） (nyh -> 2024-02-24 23:26:04)
@@ -16,14 +18,14 @@ const generateRandomString = (length: number, type: number) => {
   }
 }
 
-export const MockList = ref<any[]>(
+export const MockList = ref<MockItem[]>(
   Array.from({ length: 20 }, (_, i) => {
     const type = Math.round(Math.random()) + 1
     return {
       key: i,
       avatar: `${avatars}?${i}`,
       type: type,
-      accountId: `${i}`,
+      accountId: i,
       accountName: generateRandomString(Math.floor(Math.random() * 10) + 1, type)
     }
   })
@@ -43,5 +45,15 @@ export const dynamicList = Array.from({ length: 10 }, (_, i) => {
     user: `泰勒斯威夫特 ${i}`,
     img: imgList,
     isAuth: i % 2 === 0
+  }
+})
+
+/** 动态评论 */
+export const dynamicCommentList = Array.from({ length: 50 }, (_, i) => {
+  return {
+    id: i,
+    avatar: `${avatars}?${i}`,
+    user: `泰勒斯威夫特${i}`,
+    content: '点赞了你的动态'
   }
 })

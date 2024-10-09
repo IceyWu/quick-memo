@@ -1,6 +1,6 @@
 /** 气泡样式 */
 @mixin bubble {
-  @apply w-fit max-w-35vw min-h-1em p-[8px_12px] text-15px line-height-22px bg-[--bg-bubble] rounded-[2px_18px_18px];
+  @apply w-fit max-w-35vw min-h-1em p-[8px_12px] text-14px line-height-22px bg-[--bg-bubble] rounded-[2px_18px_18px] custom-shadow;
   word-break: break-all; /** 强制连续文本换行 */
   &.active {
     background-color: var(--bg-bubble-active);
@@ -24,11 +24,12 @@
 }
 /**! 气泡动画 */
 .bubble-animation {
+  @apply transform-gpu;
   animation: bubble-twinkle 0.4s ease-out forwards;
 }
 .photo-wall {
   @extend .bubble-oneself;
-  @apply flex flex-col items-start gap-6px max-w-380px;
+  @apply flex flex-col items-start gap-6px flex-1;
 }
 .float-header {
   @include float;
@@ -46,13 +47,18 @@
     background-color: rgb(195, 221, 216);
   }
 }
+.mac-close:hover {
+  svg {
+    display: block;
+  }
+}
 /** 浮标达到最大值时候的样式 */
 .max:hover {
   background-color: #f5dce1;
 }
 /** 回复气泡的样式 */
 .reply-bubble {
-  @apply text-12px text-[--reply-color] bg-[--bg-reply-bubble] rounded-8px p-4px cursor-pointer select-none;
+  @apply text-12px text-[--reply-color] bg-[--right-chat-reply-color] rounded-8px p-4px cursor-pointer select-none;
   svg,
   span {
     transition: color 0.4s ease-in-out;
@@ -66,11 +72,7 @@
     }
   }
   .content-span {
-    width: fit-content;
-    max-width: 250px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    @apply w-fit truncate flex-1;
   }
   /** 回复图片的计数器样式 */
   .reply-img-sub {
@@ -79,11 +81,11 @@
 }
 /** emoji回复气泡的样式 */
 .emoji-reply-bubble {
-  @apply relative rounded-8px p-[4px_8px] cursor-pointer select-none bg-#13987F66 text-14px w-fit;
+  @apply relative rounded-50px p-[4px_8px] cursor-pointer select-none bg-#13987F66 text-14px w-fit border-(1px solid #13987F) custom-shadow;
 }
 /** 跳转到回复内容时候显示的样式 */
 .active-reply {
-  background-color: var(--bg-reply-active);
+  background-color: var(--right-chat-reply-active-color);
   border-radius: 8px;
   margin: 0 8px;
   transition: all 0.4s ease-in-out;
@@ -94,6 +96,15 @@
   background-color: inherit;
   border-radius: 0;
   transition: all 0.4s ease-in-out;
+}
+/** 时间搓显示时候的动画 */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.4s ease-in-out;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 /**! 替换ait的字体颜色 */
 :deep(#aitSpan) {
