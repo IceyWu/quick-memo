@@ -39,6 +39,7 @@ const handleFileChange = (data: any) => {
   reader.onload = async function (evt: any) {
     //读取文件完毕执行此函数
     const dataJson = JSON.parse(evt?.target?.result)
+    console.log('🌵-----dataJson-----', dataJson)
 
     baseWordsStore.setBaseWords(dataJson?.words)
   }

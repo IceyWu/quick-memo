@@ -21,16 +21,12 @@
   </n-config-provider>
 </template>
 <script setup lang="ts">
-import { useWindow } from '@/hooks/useWindow.ts'
-import { delay } from 'lodash-es'
 import { lightTheme } from 'naive-ui'
-import { setting } from '@/stores/setting.ts'
-import { storeToRefs } from 'pinia'
-import { useLogin } from '@/hooks/useLogin.ts'
+
 import CardListItem from '@/components/Card/ListItem.vue'
-// import SearchInput from '@/components/Base/SearchInput.vue'
+
 import TagLsit from '@/components/Base/TagLsit.vue'
-// import { list } from '@iceywu/utils'
+
 import { onKeyStroke } from '@vueuse/core'
 import { baseWords } from '@/stores/baseWords'
 const baseWordsStore = baseWords()
@@ -63,49 +59,7 @@ const handleTagChange = (val: string) => {
   chooseTag.value = val
 }
 
-const settingStore = setting()
-const { login } = storeToRefs(settingStore)
-const accountRef = ref()
-const passwordRef = ref()
-const avatarRef = ref()
-const nameRef = ref()
-const protocol = ref()
-const loginDisabled = ref(false)
-const loading = ref(false)
 const arrowStatus = ref(false)
-const isAutoLogin = ref(false)
-const { setLoginState } = useLogin()
-/** 登录按钮的文本内容 */
-const loginText = ref('登录')
-const { createWebviewWindow } = useWindow()
-
-watchEffect(() => {
-  loginDisabled.value = !(accountRef.value && passwordRef.value && protocol.value)
-  // 清空账号的时候设置默认头像
-  if (!accountRef.value) {
-    avatarRef.value = '/logo.png'
-  }
-})
-
-/**登录后创建主页窗口*/
-const loginWin = () => {
-  loading.value = true
-  delay(async () => {
-    await createWebviewWindow('', '', 960, 720, 'login', false)
-    loading.value = false
-    if (!login.value.autoLogin || login.value.accountInfo.password === '') {
-      settingStore.setAccountInfo({
-        account: accountRef.value,
-        password: passwordRef.value,
-        avatar: avatarRef.value,
-        name: nameRef.value,
-        uid: 1,
-        token: ''
-      })
-      await setLoginState()
-    }
-  }, 1000)
-}
 
 /**监听是否点击了除了下拉框外的其他地方*/
 const handleClickOutside = (event: MouseEvent) => {
@@ -116,19 +70,6 @@ const handleClickOutside = (event: MouseEvent) => {
 }
 
 onMounted(async () => {
-  // await invoke('set_stateless_icon').catch((error: any) => {
-  //   console.log('🍭-----error-----', error)
-  // })
-  if (login.value.autoLogin && login.value.accountInfo.password !== '') {
-    isAutoLogin.value = true
-    // TODO 检查用户网络是否连接 (nyh -> 2024-03-16 12:06:59)
-    loginText.value = '网络连接中'
-    delay(async () => {
-      loginWin()
-      loginText.value = '登录'
-      await setLoginState()
-    }, 1000)
-  }
   window.addEventListener('click', handleClickOutside, true)
 })
 
