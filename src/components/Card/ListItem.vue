@@ -11,7 +11,7 @@
 <script setup lang="ts">
 import { writeText } from '@tauri-apps/plugin-clipboard-manager'
 // import { writeText } from '@tauri-apps/api/clipboard'
-// import { sendNotice } from '@/services/msg'
+import { sendNotice } from '@/services/msg'
 import assert from 'node:assert'
 import { to } from '@iceywu/utils'
 
@@ -34,11 +34,11 @@ const writeTextFunc = async () => {
   emit('handleClick', props.info, props.index)
   const [err, _] = await to(writeText(content))
   console.log('🐳-----err, _-----', err, _)
-  // if (err) {
-  //   sendNotice('error', 'Copy failed!')
-  // } else {
-  //   sendNotice('', 'Copy!')
-  // }
+  if (err) {
+    sendNotice('error', 'Copy failed!')
+  } else {
+    sendNotice('', 'Copy!')
+  }
 }
 defineExpose({
   writeTextFunc

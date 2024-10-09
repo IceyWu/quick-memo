@@ -16,6 +16,7 @@ fn main() {
         .plugin(tauri_plugin_upload::init())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_clipboard_manager::init())
+        .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_autostart::init(MacosLauncher::LaunchAgent, Some(vec!["--flag1"])))
         .setup(move |app| {
             app.handle().plugin(tauri_plugin_global_shortcut::Builder::new().build())?;

@@ -48,6 +48,7 @@
     "core:tray:allow-get-by-id",
     "shell:default",
     "shell:allow-open",
+    "notification:default",
     {
       "identifier": "http:default",
       "allow": [

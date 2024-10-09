@@ -38,6 +38,7 @@ screenshots = "0.5.4"
 base64 = "0.22.1"
 tauri-plugin-clipboard-manager = "2.0.0-rc.0"
 rodio = "0.17.3"
+tauri-plugin-notification = "2.0.1"
 
 [features]
 # by default Tauri runs in production mode
