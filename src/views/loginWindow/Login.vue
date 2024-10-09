@@ -91,7 +91,7 @@ watchEffect(() => {
 const loginWin = () => {
   loading.value = true
   delay(async () => {
-    await createWebviewWindow('', '', 960, 720, 'login', false, true)
+    await createWebviewWindow('', '', 960, 720, 'login', false)
     loading.value = false
     if (!login.value.autoLogin || login.value.accountInfo.password === '') {
       settingStore.setAccountInfo({
@@ -99,7 +99,8 @@ const loginWin = () => {
         password: passwordRef.value,
         avatar: avatarRef.value,
         name: nameRef.value,
-        uid: '123456'
+        uid: 1,
+        token: ''
       })
       await setLoginState()
     }
@@ -115,9 +116,9 @@ const handleClickOutside = (event: MouseEvent) => {
 }
 
 onMounted(async () => {
-  await invoke('set_stateless_icon').catch((error) => {
-    console.log('🍭-----error-----', error)
-  })
+  // await invoke('set_stateless_icon').catch((error: any) => {
+  //   console.log('🍭-----error-----', error)
+  // })
   if (login.value.autoLogin && login.value.accountInfo.password !== '') {
     isAutoLogin.value = true
     // TODO 检查用户网络是否连接 (nyh -> 2024-03-16 12:06:59)

@@ -52,5 +52,7 @@ module.exports = {
 		'@typescript-eslint/no-explicit-any': 'off', // 关闭any校验
 		'no-redeclare': 2, //禁止重复声明变量
 		'eol-last': 'off', // 关闭行尾符（linebreak-style）的校验
+		'@typescript-eslint/no-unused-expressions': 'off', 
+		'@typescript-eslint/no-unused-vars': 'off',
 	},
 }
